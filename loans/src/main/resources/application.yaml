@@ -5,7 +5,7 @@ Spring:
       name :loan-service
   datasource:
       driver-class-name: org.h2.Driver
-      url: jdbc:h2:mem:db
+      url: jdbc:h2:mem:testdb
       username: sa
       password: ''
   h2:
