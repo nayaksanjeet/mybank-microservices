@@ -84,4 +84,24 @@ public class LoansController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDto(LoansConstants.STATUS_417, LoansConstants.MESSAGE_417_UPDATE));
         }
     }
+
+    @Operation(summary = "Close loan details", description = "This API is used to delete loan details using mobileNumber. ")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Loan details deleted successfully"),
+            @ApiResponse(responseCode = "417", description = "Loan details Not Found",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class))),
+            @ApiResponse(responseCode = "500", description = "HTTP Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    ))
+    })
+    @DeleteMapping("/remove")
+    public ResponseEntity<ResponseDto> closeLoan(@RequestParam @Pattern(regexp = LoansConstants.MOBILE_NUMBER_PATTERN, message = "mobile number should be 10 digits") String mobileNumber) {
+        boolean isDeleted = loanService.removeLoan(mobileNumber);
+        if(isDeleted)
+        return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(LoansConstants.STATUS_200, LoansConstants.MESSAGE_200));
+        else
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDto(LoansConstants.STATUS_417, LoansConstants.MESSAGE_417_DELETE));
+    }
 }
