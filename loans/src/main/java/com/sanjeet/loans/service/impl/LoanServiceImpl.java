@@ -4,6 +4,8 @@ import com.sanjeet.loans.constants.LoansConstants;
 import com.sanjeet.loans.dto.LoanDto;
 import com.sanjeet.loans.entity.Loans;
 import com.sanjeet.loans.exception.LoanAlreadyExistsException;
+import com.sanjeet.loans.exception.ResouceNotFoundException;
+import com.sanjeet.loans.mapper.LoansMapper;
 import com.sanjeet.loans.repository.LoanRepository;
 import com.sanjeet.loans.service.ILoanService;
 import lombok.AllArgsConstructor;
@@ -26,6 +28,8 @@ public class LoanServiceImpl implements ILoanService {
         loanRepository.save(createNewLoan(mobileNumber));
     }
 
+
+
     private Loans createNewLoan(String mobileNumber) {
         Loans loans = new Loans();
         long randomLoanNumber = 100000000000L + new Random().nextInt(900000000);
@@ -36,5 +40,11 @@ public class LoanServiceImpl implements ILoanService {
         loans.setAmountPaid(0);
         loans.setOutstandingAmount(LoansConstants.NEW_LOAN_LIMIT);
         return loans;
+    }
+
+    @Override
+    public LoanDto fechLoanDetails(String mobileNumber) {
+        Loans loans = loanRepository.findByMobileNumber(mobileNumber).orElseThrow(() -> new ResouceNotFoundException("Loan not found for this mobile number "+mobileNumber));
+        return LoansMapper.mapLoansToDto(loans, new LoanDto());
     }
 }

@@ -4,4 +4,5 @@ import com.sanjeet.loans.dto.LoanDto;
 
 public interface ILoanService {
     void createLoan(String mobileNumber);
+    LoanDto fechLoanDetails(String mobileNumber);
 }
