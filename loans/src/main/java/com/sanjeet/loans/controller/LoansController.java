@@ -63,4 +63,25 @@ public class LoansController {
         LoanDto loanDetail = loanService.fechLoanDetails(mobileNumber);
         return ResponseEntity.status(HttpStatus.OK).body(loanDetail);
     }
+
+    @Operation(summary = "Update loan details", description = "This API is used to update loan details . ")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Loan details updated successfully"),
+            @ApiResponse(responseCode = "417", description = "Loan details Not Found",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class))),
+            @ApiResponse(responseCode = "500", description = "HTTP Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    ))
+    })
+    @PutMapping("/update")
+    public ResponseEntity<ResponseDto> updateLoan(@RequestBody @Valid LoanDto loanDto) {
+        boolean isLoanUpdated = loanService.updateLoan(loanDto);
+        if (isLoanUpdated) {
+            return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(LoansConstants.STATUS_200, LoansConstants.MESSAGE_200));
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDto(LoansConstants.STATUS_417, LoansConstants.MESSAGE_417_UPDATE));
+        }
+    }
 }
