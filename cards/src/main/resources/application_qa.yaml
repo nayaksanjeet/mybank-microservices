@@ -1,0 +1,16 @@
+Spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+build:
+  version: "2.0"
+
+cards:
+  message: "Welcome to myBank cards related QA APIs "
+  contactDetails:
+    name: "Cherryl Pankaj - QA Lead"
+    email: "cherryl@mybank.com"
+  onCallSupport:
+      - (310) 875-4367
+      - (201) 236-126
