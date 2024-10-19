@@ -96,7 +96,7 @@
 				<version>3.4.2</version>
 				<configuration>
 					<to>
-						<image>sanjeetnayak09/${project.artifactId}:v1</image>
+						<image>sanjeetnayak09/${project.artifactId}:v2</image>
 					</to>
 				</configuration>
 			</plugin>
