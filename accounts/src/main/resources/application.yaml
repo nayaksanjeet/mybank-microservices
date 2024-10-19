@@ -15,8 +15,15 @@ spring:
         hibernate:
             ddl-auto: update
         database-platform: org.hibernate.dialect.H2Dialect
+    config:
+        import:
+            - "application_qa.yaml"
+            - "application_prod.yaml"
+    profiles:
+        active:
+            - "qa"
 build:
-    version: "1.0"
+    version: "3.0"
 accounts:
     message: "Welcome to MyBank accounts related local APIs "
     contactDetails:
