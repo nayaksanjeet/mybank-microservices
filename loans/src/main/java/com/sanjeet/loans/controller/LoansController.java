@@ -3,6 +3,7 @@ package com.sanjeet.loans.controller;
 import com.sanjeet.loans.constants.LoansConstants;
 import com.sanjeet.loans.dto.ErrorResponseDto;
 import com.sanjeet.loans.dto.LoanDto;
+import com.sanjeet.loans.dto.LoansContactInfoDto;
 import com.sanjeet.loans.dto.ResponseDto;
 import com.sanjeet.loans.service.ILoanService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +15,10 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,13 +26,21 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(path = "api/v1/loans", produces = "application/json")
-@AllArgsConstructor
 @Validated
 @Tag(name = "Loans", description = "APIs to perform CRUD Operation (create ,fetch ,update and delete) on a loan")
 public class LoansController {
 
     private ILoanService loanService;
 
+    @Value("${build.version}")
+    private String buildVersion;
+    @Autowired
+    Environment environment;
+    @Autowired
+    private LoansContactInfoDto loansContactInfoDto;
+    public LoansController(ILoanService loanService) {
+        this.loanService = loanService;
+    }
     @Operation(summary = "Create a new loan",
             description = "This API is used to create a new loan using mobileNumber. ")
     @ApiResponses({
@@ -103,5 +116,44 @@ public class LoansController {
         return ResponseEntity.status(HttpStatus.OK).body(new ResponseDto(LoansConstants.STATUS_200, LoansConstants.MESSAGE_200));
         else
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ResponseDto(LoansConstants.STATUS_417, LoansConstants.MESSAGE_417_DELETE));
+    }
+
+    @Operation(summary = "Get build version", description = "This API is used to get build version of Loans microservice. ")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Build version fetched successfully"),
+            @ApiResponse(responseCode = "500", description = "HTTP Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    ))
+    })
+    @GetMapping("/build-version")
+    public ResponseEntity<String> getBuildVersion(){
+        return ResponseEntity.ok().body(buildVersion);
+    }
+
+    @Operation(summary = "Get contact info", description = "This API is used to get contact info of Loans microservice in case of any issues. ")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Contact info fetched successfully"),
+            @ApiResponse(responseCode = "500", description = "HTTP Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    ))
+    })
+    @GetMapping("/contact-info")
+    public ResponseEntity<LoansContactInfoDto> getContactInfo(){
+        return ResponseEntity.ok().body(loansContactInfoDto);
+    }
+
+    @Operation(summary = "Get java version", description = "This API is used to get java version of Loans microservice. ")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Java version fetched successfully"),
+            @ApiResponse(responseCode = "500", description = "HTTP Internal Server Error",
+                    content = @Content(
+                            schema = @Schema(implementation = ErrorResponseDto.class)
+                    ))
+    })
+    @GetMapping("/java-version")
+    public ResponseEntity<String> getJavaVersion(){
+        return ResponseEntity.ok().body(environment.getProperty("JAVA_HOME"));
     }
 }
