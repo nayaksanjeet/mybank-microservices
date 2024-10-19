@@ -1,7 +1,7 @@
 package com.sanjeet.accounts.controller;
 
 import com.sanjeet.accounts.constants.AccountsConstants;
-import com.sanjeet.accounts.dto.AccountsContactDto;
+import com.sanjeet.accounts.dto.AccountsContactInfoDto;
 import com.sanjeet.accounts.dto.CustomerDto;
 import com.sanjeet.accounts.dto.ErrorResponseDto;
 import com.sanjeet.accounts.dto.RsponseDto;
@@ -35,19 +35,21 @@ public class AccountsController {
 
     private IAccountsService accountsService;
 
+    public AccountsController(IAccountsService accountsService) {
+        this.accountsService = accountsService;
+
+    }
     @Value("${build.version}")
     private String buildVersion;
+
 
     @Autowired
     private Environment environment;
 
     @Autowired
-    private AccountsContactDto accountsContactDto;
+    private AccountsContactInfoDto accountsContactDto;
 
-    public AccountsController(IAccountsService accountsService) {
-        this.accountsService = accountsService;
 
-    }
 
     @Operation(
             summary = "Open a new Account associated with a customer",
@@ -191,7 +193,7 @@ public class AccountsController {
             ))
     })
     @GetMapping("/contact-info")
-    public ResponseEntity<AccountsContactDto> getContactInfo(){
+    public ResponseEntity<AccountsContactInfoDto> getContactInfo(){
         return ResponseEntity.ok().body(accountsContactDto);
     }
 }

@@ -6,5 +6,5 @@ import java.util.List;
 import java.util.Map;
 
 @ConfigurationProperties(prefix = "accounts")
-public record AccountsContactDto(String message, Map<String,String> contactDetails, List<String> onCallSupport)  {
+public record AccountsContactInfoDto(String message, Map<String,String> contactDetails, List<String> onCallSupport)  {
 }

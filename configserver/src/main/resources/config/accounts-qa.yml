@@ -1,11 +1,5 @@
-spring:
-  config:
-    activate:
-      on-profile: "qa"
-
 build:
   version: "2.0"
-
 accounts:
   message: "Welcome to myBank accounts related QA APIs "
   contactDetails:
