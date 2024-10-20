@@ -2,12 +2,12 @@ server:
     port: 8080
 spring:
     application:
-        name: accounts-service
+        name: loans
     datasource:
+        driver-class-name: org.h2.Driver
         url: jdbc:h2:mem:testdb
         username: sa
         password: ''
-        driver-class-name: org.h2.Driver
     h2:
         console.enabled: true
     jpa:
@@ -16,19 +16,18 @@ spring:
             ddl-auto: update
         database-platform: org.hibernate.dialect.H2Dialect
     config:
-        import:
-            - "application_qa.yaml"
-            - "application_prod.yaml"
+        import: "optional:configserver:http://localhost:8071/"
     profiles:
         active:
-            - "qa"
-build:
-    version: "3.0"
-accounts:
-    message: "Welcome to MyBank accounts related local APIs "
-    contactDetails:
-        name: "John Doe - Developer"
-        email: "john@myBank.com"
-    onCallSupport:
-        - (555) 555-1234
-        - (555) 523-1345
+            - "prod"
+management:
+    endpoints:
+        web:
+            exposure:
+                include: "*"
+
+    rabbitmq:
+        host: localhost
+        port: 5672
+        username: guest
+        password: guest

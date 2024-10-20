@@ -1,6 +1,6 @@
 package com.sanjeet.accounts;
 
-import com.sanjeet.accounts.dto.AccountsContactDto;
+import com.sanjeet.accounts.dto.AccountsContactInfoDto;
 import io.swagger.v3.oas.annotations.ExternalDocumentation;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.info.Contact;
@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @SpringBootApplication
 @EnableJpaAuditing(auditorAwareRef = "auditImpl")
-@EnableConfigurationProperties(value = {AccountsContactDto.class})
+@EnableConfigurationProperties(value = {AccountsContactInfoDto.class})
 @OpenAPIDefinition(
 		info = @Info(
 				title = "Accounts microservice Rest API Documentation",

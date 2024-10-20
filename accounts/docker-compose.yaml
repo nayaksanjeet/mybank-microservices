@@ -1,5 +1,5 @@
 services:
-    accounts-service:
+    accounts:
         image: "sanjeetnayak09/accounts:v1"
         container_name: accounts-ms
         ports:
@@ -10,7 +10,7 @@ services:
               memory: 800MB
         networks:
           - myBank
-    loans-service:
+    loans:
         image: "sanjeetnayak09/loans:v1"
         container_name: loans-ms
         ports:
@@ -21,7 +21,7 @@ services:
               memory: 800MB
         networks:
           - myBank
-    cards-service:
+    cards:
         image: "sanjeetnayak09/cards:v1"
         container_name: cards-ms
         ports:
