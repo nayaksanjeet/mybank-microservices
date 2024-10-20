@@ -1,5 +1,5 @@
 server:
-    port: 8090
+  port: 8090
 spring:
   application:
     name: loans
@@ -13,13 +13,13 @@ spring:
   jpa:
     show-sql: true
     hibernate:
-        ddl-auto: update
+      ddl-auto: update
     database-platform: org.hibernate.dialect.H2Dialect
   config:
     import: "optional:configserver:http://localhost:8071/"
   profiles:
     active:
-    - "prod"
+      - "prod"
 management:
   endpoints:
     web:
