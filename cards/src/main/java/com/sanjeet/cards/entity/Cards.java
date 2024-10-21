@@ -16,7 +16,7 @@ import lombok.ToString;
 public class Cards extends BaseEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer cardId;
     private String mobileNumber;
     private String cardNumber;
