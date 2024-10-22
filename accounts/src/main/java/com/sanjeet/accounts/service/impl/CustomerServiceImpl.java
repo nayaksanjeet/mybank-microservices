@@ -12,7 +12,7 @@ import com.sanjeet.accounts.mapper.CustomerMapper;
 import com.sanjeet.accounts.repository.AccountsRepository;
 import com.sanjeet.accounts.repository.CustomerRepository;
 import com.sanjeet.accounts.service.client.CardsFeignClient;
-import com.sanjeet.accounts.service.client.ICustomerService;
+import com.sanjeet.accounts.service.ICustomerService;
 import com.sanjeet.accounts.service.client.LoansFeignClient;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;

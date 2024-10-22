@@ -1,4 +1,4 @@
-package com.sanjeet.accounts.service.client;
+package com.sanjeet.accounts.service;
 
 import com.sanjeet.accounts.dto.CustomerDetailsDto;
 
