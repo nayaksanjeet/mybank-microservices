@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.core.env.Environment;
 
 @RestController
-@RequestMapping(path = "api/v1/accounts", produces = {MediaType.APPLICATION_JSON_VALUE})
+@RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 
 @Validated
 @Tag(

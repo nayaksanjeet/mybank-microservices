@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(value = "/api/v1/customer")
+@RequestMapping(value = "/api")
 @Tag(description = "GET Customer Details for Customer in myBank application", name = "Customer Details API")
 @Validated
 @AllArgsConstructor
@@ -34,7 +34,7 @@ public class CustomerController {
             @ApiResponse(responseCode = "200", description = "HTTP Status OK"),
             @ApiResponse(responseCode = "500", description = "HTTP Status INTERNAL_SERVER_ERROR", content = @Content(schema = @Schema(implementation = ErrorResponseDto.class)))
     })
-    @GetMapping(value = "/fetch")
+    @GetMapping(value = "/fetchCustomerDetails")
     public ResponseEntity<CustomerDetailsDto> fetchCustomerDetails(@RequestParam @Valid @Pattern(regexp = AccountsConstants.MOBILE_NUMBER_PATTERN, message = "Mobile number should be 10 digits") String mobileNumber) {
      CustomerDetailsDto customerDetailsDto = customerService.fetchCustomerDetails(mobileNumber);
      return ResponseEntity.ok().body(customerDetailsDto);
