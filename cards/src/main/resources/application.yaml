@@ -25,12 +25,20 @@ management:
     web:
       exposure:
         include: "*"
+  health:
+    liveness-state:
+      enabled: true
+    readiness-state:
+      enabled: true
   info:
     env:
       enabled: true
   endpoint:
     shutdown:
       enabled: true
+    health:
+      probes:
+        enabled: true
 endpoints:
   shutdown:
     enabled: true
@@ -48,3 +56,8 @@ info:
     name: "cards"
     version: "1.0.0"
     description: "myBank Cards Application"
+logging:
+  level:
+    com:
+      sanjeet:
+        cards: DEBUG

@@ -26,9 +26,17 @@ management:
         web:
             exposure:
                 include: "*"
+    health:
+        liveness-state:
+            enabled: true
+        readiness-state:
+            enabled: true
     endpoint:
         shutdown:
             enabled: true
+        health:
+            probes:
+                enabled: true
     info:
         env:
             enabled: true
@@ -51,3 +59,8 @@ info:
         name: "accounts"
         description: " myBank Accounts Application"
         version: "1.0.0"
+logging:
+    level:
+        com:
+            sanjeet:
+                accounts: DEBUG
