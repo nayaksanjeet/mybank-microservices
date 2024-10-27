@@ -1,6 +1,17 @@
 services:
+  redis:
+    image: "redis"
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD-SHELL","redis-cli ping | grep PONG"]
+      timeout: 10s
+      retries: 10
+    extends:
+      file: common-config.yaml
+      service: network-deploy-service
   configserver:
-    image: "sanjeetnayak09/configserver:v5"
+    image: "sanjeetnayak09/configserver:v6"
     container_name: configserver-ms
     ports:
       - "8071:8071"
@@ -15,7 +26,7 @@ services:
       service: microservice-base-config
 
   eurekaserver:
-    image: "sanjeetnayak09/eurekaserver:v5"
+    image: "sanjeetnayak09/eurekaserver:v6"
     container_name: eurekaserver-ms
     ports:
       - "8070:8070"
@@ -35,7 +46,7 @@ services:
       service: microservice-configserver-config
 
   accounts:
-    image: "sanjeetnayak09/accounts:v5"
+    image: "sanjeetnayak09/accounts:v6"
     container_name: accounts-ms
     ports:
       - "8080:8080"
@@ -52,7 +63,7 @@ services:
       service: microservice-eureka-config
 
   loans:
-    image: "sanjeetnayak09/loans:v5"
+    image: "sanjeetnayak09/loans:v6"
     container_name: loans-ms
     ports:
       - "8090:8090"
@@ -69,7 +80,7 @@ services:
       service: microservice-eureka-config
 
   cards:
-    image: "sanjeetnayak09/cards:v5"
+    image: "sanjeetnayak09/cards:v6"
     container_name: cards-ms
     ports:
       - "9000:9000"
@@ -86,7 +97,7 @@ services:
       service: microservice-eureka-config
 
   gatewayserver:
-    image: "sanjeetnayak09/gatewayserver:v5"
+    image: "sanjeetnayak09/gatewayserver:v6"
     container_name: gatewayserver-ms
     ports:
       - "8072:8072"
@@ -97,8 +108,14 @@ services:
         condition: service_healthy
       cards:
         condition: service_healthy
+      redis:
+        condition: service_healthy
     environment:
       SPRING_APPLICATION_NAME: "gatewayserver"
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
+      SPRING_DATA_REDIS_CONNECT-TIMEOUT: 2s
+      SPRING_DATA_REDIS_TIMEOUT: 1s
     extends:
       file: common-config.yaml
       service: microservice-eureka-config

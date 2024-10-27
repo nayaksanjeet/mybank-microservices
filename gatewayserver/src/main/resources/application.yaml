@@ -9,8 +9,18 @@ spring:
         locator:
           enabled: false
           lowerCaseServiceId: true
+      httpclient:
+        connect-timeout: 1000
+        response-timeout: 5s
+  data:
+    redis:
+      connect-timeout: 5s
+      host: localhost
+      port: 6379
+      timeout: 3s
+
 server:
-          
+  port: 8070
 
 management:
   endpoints:
@@ -27,7 +37,7 @@ management:
 info:
   app:
     name: "gatewayserver"
-    description: "my Bank Gateway Server Application"
+    description: "My Bank Gateway Server Application"
     version: "1.0.0"
 
 logging:
@@ -35,3 +45,11 @@ logging:
     com:
       sanjeet:
         gatewayserver: DEBUG
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      slidingWindowSize: 10
+      permittedNumberOfCallsInHalfOpenState: 2
+      failureRateThreshold: 50
+      waitDurationInOpenState: 10000

@@ -12,6 +12,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
+
 @SpringBootApplication
 @EnableJpaAuditing(auditorAwareRef = "auditImpl")
 @EnableConfigurationProperties(value = {AccountsContactInfoDto.class})
