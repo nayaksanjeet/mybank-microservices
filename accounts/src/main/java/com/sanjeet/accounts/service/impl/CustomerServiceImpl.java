@@ -15,6 +15,8 @@ import com.sanjeet.accounts.service.client.CardsFeignClient;
 import com.sanjeet.accounts.service.ICustomerService;
 import com.sanjeet.accounts.service.client.LoansFeignClient;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -22,9 +24,13 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class CustomerServiceImpl implements ICustomerService{
 
+
     private CustomerRepository customerRepository;
+
     private AccountsRepository accountsRepository;
+
     private CardsFeignClient cardsFeignClient;
+
     private LoansFeignClient loansFeignClient;
 
     @Override
@@ -38,10 +44,10 @@ public class CustomerServiceImpl implements ICustomerService{
         CustomerDetailsDto customerDetailsDto = CustomerMapper.mapCustomerToDto(customer, new CustomerDetailsDto());
         customerDetailsDto.setAccountsDto( AccountsMapper.mapAccountsToDto(accounts, new AccountsDto()));
         ResponseEntity<LoanDto> loanDto = loansFeignClient.fetchLoan(correlationId,customerDetailsDto.getMobileNumber());
-        if(loanDto.getBody() != null)
+        if(null != loanDto)
             customerDetailsDto.setLoanDto(loanDto.getBody());
         ResponseEntity<CardsDto> cardsDto = cardsFeignClient.fetchCardDetails(correlationId,customerDetailsDto.getMobileNumber());
-        if(cardsDto.getBody() != null)
+        if(null != cardsDto)
             customerDetailsDto.setCardsDto(cardsDto.getBody());
         return customerDetailsDto;
     }
