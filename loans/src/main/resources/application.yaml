@@ -4,7 +4,7 @@ spring:
   application:
     name: "loans"
   profiles:
-    active: "default"
+    active: "prod"
   datasource:
     url: jdbc:h2:mem:testdb
     driverClassName: org.h2.Driver
@@ -40,6 +40,9 @@ management:
   info:
     env:
       enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 endpoints:
   shutdown:
@@ -57,7 +60,7 @@ eureka:
 info:
   app:
     name: "loans"
-    description: " myBank Loans Application"
+    description: "My Bank Loans Application"
     version: "1.0.0"
 
 logging:
@@ -65,3 +68,5 @@ logging:
     com:
       sanjeet:
         loans: DEBUG
+  pattern:
+    level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"

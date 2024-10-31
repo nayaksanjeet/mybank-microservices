@@ -39,8 +39,10 @@ public class CustomerController {
     @GetMapping(value = "/fetchCustomerDetails")
     public ResponseEntity<CustomerDetailsDto> fetchCustomerDetails(@RequestHeader("myBank-correlation-id") String correlationId,
             @RequestParam @Valid @Pattern(regexp = AccountsConstants.MOBILE_NUMBER_PATTERN, message = "Mobile number should be 10 digits") String mobileNumber) {
-     logger.debug("correlationId found: {}",correlationId);
+     //logger.debug("correlationId found: {}",correlationId);
+        logger.debug("fetchCustomerDetails is invoked");
         CustomerDetailsDto customerDetailsDto = customerService.fetchCustomerDetails(correlationId,mobileNumber);
+        logger.debug("fetchCustomerDetails is completed");
      return ResponseEntity.ok().body(customerDetailsDto);
     }
 }
