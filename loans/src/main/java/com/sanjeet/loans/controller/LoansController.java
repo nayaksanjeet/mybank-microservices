@@ -78,8 +78,10 @@ public class LoansController {
     @GetMapping("/fetch")
     public ResponseEntity<LoanDto> fetchLoan(@RequestHeader("myBank-correlation-id") String correlationId,
             @RequestParam @Pattern(regexp = LoansConstants.MOBILE_NUMBER_PATTERN, message = "mobile number should be 10 digits") String mobileNumber) {
-        logger.debug("correlation Id found: {}",correlationId);
+        //logger.debug("correlation Id found: {}",correlationId);
+        logger.debug("fetchLoan is invoked");
         LoanDto loanDetail = loanService.fechLoanDetails(mobileNumber);
+        logger.debug("fetchLoan is completed");
         return ResponseEntity.status(HttpStatus.OK).body(loanDetail);
     }
 

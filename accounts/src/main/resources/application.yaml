@@ -4,7 +4,7 @@ spring:
     application:
         name: "accounts"
     profiles:
-        active: "default"
+        active: "prod"
     datasource:
         url: jdbc:h2:mem:testdb
         driverClassName: org.h2.Driver
@@ -23,7 +23,7 @@ spring:
     cloud:
         openfeign:
             circuitbreaker:
-             enabled: true
+                enabled: true
 
 management:
     endpoints:
@@ -44,6 +44,9 @@ management:
     info:
         env:
             enabled: true
+    metrics:
+        tags:
+            application: ${spring.application.name}
 
 endpoints:
     shutdown:
@@ -69,6 +72,16 @@ logging:
         com:
             sanjeet:
                 accounts: DEBUG
+    pattern:
+        level: "%5p [${spring.application.name},%X{trace_id},%X{span_id}]"
+
+resilience4j.circuitbreaker:
+    configs:
+        default:
+            slidingWindowSize: 10
+            permittedNumberOfCallsInHalfOpenState: 2
+            failureRateThreshold: 50
+            waitDurationInOpenState: 10000
 
 resilience4j.retry:
     configs:
@@ -82,22 +95,9 @@ resilience4j.retry:
             retryExceptions:
                 - java.util.concurrent.TimeoutException
 
-resilience4j.circuitbreaker:
-    configs:
-        default:
-            slidingWindowSize: 10
-            permittedNumberOfCallsInHalfOpenState: 2
-            failureRateThreshold: 50
-            waitDurationInOpenState: 10000
-
 resilience4j.ratelimiter:
     configs:
         default:
             timeoutDuration: 1000
             limitRefreshPeriod: 5000
             limitForPeriod: 1
-
-
-
-
-
