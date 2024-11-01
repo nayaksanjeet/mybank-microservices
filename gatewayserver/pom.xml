@@ -115,7 +115,7 @@
                 <version>3.4.2</version>
                 <configuration>
                     <to>
-                        <image>sanjeetnayak09/${project.artifactId}:v8</image>
+                        <image>sanjeetnayak09/${project.artifactId}:v9</image>
                     </to>
                 </configuration>
             </plugin>
